@@ -20,6 +20,10 @@ $clientId = '124877107597710';
 $clientSecret = '96fea8133cabb860af99ee5168169015';
 $redirectUri = "http://oauth-facebook.local/single-account/get_access_token.php";
 
+// Our page title
+echo "<h1>Get Access token</h1>";
+
+// Create our Facebook object
 $facebookObject = new EpiFacebook($clientId, $clientSecret);
 
 // If we've come back from Facebook with a value in $_GET["code"], then
@@ -48,20 +52,26 @@ if (empty($_GET["code"])) {
 		echo "<h1>A little information about you</h1>";
 		$obj = new EpiFacebook($clientId, $clientSecret, $_SESSION["token"]);
 		$user = $obj->get("/me");
+		
+		// Convert the provided XML into an object that we can use
 		$data = json_decode($user->responseText);
 		
+		// Also add the UID to the session
+		$_SESSION["uid"] = $user["id"];
+		
+		// Display a little basic information
 		echo "<p>Hello ".$user["first_name"].", your Facebook profile link is: <a href=\"".$user["link"]."\">".$user["link"]."</a></p>";
 		echo "<p>You last updated your profile on ".date("l jS F",strtotime($user["updated_time"])).".</p>";
 		echo "<pre>";
 		echo var_dump($data);
 		echo "</pre>";
-				
-		/* List examples that we can now use with our examples */
-		echo "<hr />";
-		echo "<h3>Try out other examples:</h3>";
-		echo "<ul>";
-		echo "<li><a href=\"post_update.php\">Post Status Update</a></li>";
-		echo "</ul>";
 	}
 }	
+
+echo "<hr />";
+echo "<h3>Other Examples</h3>";
+echo "<ul>";
+echo "<li><a href=\"post_update.php\">Post Update</a></li>";
+echo "<li><a href=\"find_friends_using_app.php\">Find Friends Using App</a></li>";
+echo "</ul>";
 ?>
