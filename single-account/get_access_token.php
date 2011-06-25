@@ -33,7 +33,6 @@ if (empty($_GET["code"])) {
 	// to perform actions while a user is not logged in to your app/site then you need
 	// to request the 'offline_access' token which will provide a non-expiring token
 	$permissions = array("email", "publish_stream", "read_stream", "offline_access");
-
 	
 	$authorizeUrl = $facebookObject->getAuthorizeUrl($redirectUri, $permissions);
 	echo "<p>To begin, request an access token by clicking the link below.</p>";
@@ -61,7 +60,7 @@ if (empty($_GET["code"])) {
 		echo "<hr />";
 		echo "<h3>Try out other examples:</h3>";
 		echo "<ul>";
-		echo "<li><a href=\"\">Post Status Update</a></li>";
+		echo "<li><a href=\"post_update.php\">Post Status Update</a></li>";
 		echo "</ul>";
 	}
 }	
